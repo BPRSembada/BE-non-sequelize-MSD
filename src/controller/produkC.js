@@ -102,7 +102,6 @@ const getAlldataSimpanan = async (req, res) => {
       const sql = "SELECT * FROM simpanan";
       db.query(sql, (error, result) => {
         if (error) throw error;
-
         response(200, result, "get all data form simpanan", res);
       });
     } else {
@@ -110,6 +109,32 @@ const getAlldataSimpanan = async (req, res) => {
     }
   } catch (error) {
     response(500, error, "Produk sever error", res);
+  }
+};
+const updateKategoriSimpanan = async (req, res) => {
+  try {
+    if (req.user.role === "admin") {
+      const { kategori, id } = req.body;
+      console.log(req.body);
+      const sql = `UPDATE simpanan SET kategori = ? WHERE id = ?`;
+      db.query(sql, [kategori, id], (error, result) => {
+        console.log(result);
+        if (error) {
+          return response(500, "error", "Fail update category", res);
+        } else {
+          return response(
+            200,
+            result,
+            `Updated kategori for simpanan with id ${id}`,
+            res
+          );
+        }
+      });
+    } else {
+      response(400, "access denied", "Your account is not an admin", res);
+    }
+  } catch (error) {
+    response(500, error, "Server error", res);
   }
 };
 
@@ -302,6 +327,7 @@ module.exports = {
   getAlldataSimpanan,
   createDataSimpanan,
   deleteDataSimpanan,
+  updateKategoriSimpanan,
   creatDataKemitraan,
   getAllDataKemitraan,
   deleteDataKemitraan,

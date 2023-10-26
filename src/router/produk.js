@@ -10,7 +10,12 @@ router.delete("/pinjaman", Controller.deleteDataPinjaman);
 
 // router simpanan
 router.post("/simpanan", Controller.createDataSimpanan);
-router.get("/simpanan", Controller.getAlldataSimpanan);
+router.get("/simpanan", auth, Controller.getAlldataSimpanan);
+router.post(
+  "/simpanan/updateSimpanan",
+  auth,
+  Controller.updateKategoriSimpanan
+);
 router.delete("/simpanan", Controller.deleteDataSimpanan);
 
 // router kemitraan

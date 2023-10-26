@@ -71,7 +71,6 @@ const getUsers = async (req, res) => {
 const login = async (req, res) => {
   try {
     const { email, password } = req.body;
-    console.log(req.body, "ini body");
     const sql = `SELECT * FROM users WHERE email ='${email}'`;
     db.query(sql, async (error, result) => {
       if (error) {
@@ -146,9 +145,39 @@ const logout = async (req, res) => {
   }
 };
 
+const keepLogin = async (req, res) => {
+  try {
+    const { token } = req.body;
+
+    const sql = `SELECT * FROM users WHERE token ='${token}'`;
+    db.query(sql, (error, result) => {
+      if (error) {
+        return response(500, null, "User server error", res);
+      } else if (result.length === 0) {
+        return response(400, null, "Token expired, please relogin!", res);
+      } else {
+        const dataResponseLogin = {
+          id: result[0].id,
+          username: result[0].username,
+          email: result[0].email,
+          role: result[0].role,
+        };
+        const payload = {
+          token,
+          dataResponseLogin,
+        };
+        return response(200, payload, "Re-Login user success", res);
+      }
+    });
+  } catch (error) {
+    response(400, null, "User server error", res);
+  }
+};
+
 module.exports = {
   registrasi,
   getUsers,
   login,
   logout,
+  keepLogin,
 };

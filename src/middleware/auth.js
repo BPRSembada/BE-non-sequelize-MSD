@@ -13,7 +13,7 @@ const auth = (req, res, next) => {
 
   try {
     JWT.verify(token, SECRET, (error, decoded) => {
-      error && response(400, "Invalid", "Invalid token, please relogin!");
+      error && response(400, "Invalid", "Invalid token, please relogin!", res);
       if (!error) {
         req.user = decoded;
         next();
