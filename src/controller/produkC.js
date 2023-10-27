@@ -15,8 +15,10 @@ const createDataPinjaman = (req, res) => {
     jenis_jaminan,
     sertifikat_atas_nama,
     rencana_pinjaman_dana,
+    kategori,
   } = req.body;
-  const sql = `INSERT INTO pinjaman (id, date, nama_lengkap, jenis_pinjaman, no_telephone, email, provinsi, kota, pekerjaan, jenis_jaminan, sertifikat_atas_nama, rencana_pinjaman_dana) VALUES (NULL, '${date}', '${nama_lengkap}', '${jenis_pinjaman}', '${no_telephone}', '${email}', '${provinsi}', '${kota}', '${pekerjaan}', '${jenis_jaminan}', '${sertifikat_atas_nama}', '${rencana_pinjaman_dana}')`;
+  console.log(req.body);
+  const sql = `INSERT INTO pinjaman (id, date, nama_lengkap, jenis_pinjaman, no_telephone, email, provinsi, kota, pekerjaan, jenis_jaminan, sertifikat_atas_nama, rencana_pinjaman_dana, kategori) VALUES (NULL, '${date}', '${nama_lengkap}', '${jenis_pinjaman}', '${no_telephone}', '${email}', '${provinsi}', '${kota}', '${pekerjaan}', '${jenis_jaminan}', '${sertifikat_atas_nama}', '${rencana_pinjaman_dana}', '${kategori}')`;
 
   db.query(sql, (error, result) => {
     if (error) return response(500, "", "Pinjaman Server Error", res);
@@ -76,13 +78,16 @@ const createDataSimpanan = (req, res) => {
     provinsi,
     kota,
     penempatan_dana,
+    kategori,
   } = req.body;
-  const sql = `INSERT INTO simpanan (id, date, jenis_simpanan, nama_lengkap, no_telephone, email, provinsi, kota, penempatan_dana) VALUES (NULL, '${date}', '${jenis_simpanan}', '${nama_lengkap}', '${no_telephone}', '${email}', '${provinsi}', '${kota}', '${penempatan_dana}')`;
+  console.log(req.body);
+  const sql = `INSERT INTO simpanan (id, date, jenis_simpanan, nama_lengkap, no_telephone, email, provinsi, kota, penempatan_dana, kategori) VALUES (NULL, '${date}', '${jenis_simpanan}', '${nama_lengkap}', '${no_telephone}', '${email}', '${provinsi}', '${kota}', '${penempatan_dana}', '${kategori}')`;
 
   db.query(sql, (error, result) => {
     if (error) {
       return response(500, "", "Simpanan Server Error", res);
     }
+
     if (result.affectedRows > 0) {
       return response(
         200,
@@ -218,9 +223,10 @@ const creatDataSDB = (req, res) => {
     email,
     provinsi,
     kota,
+    kategori,
   } = req.body;
 
-  const sql = `INSERT INTO sdb (id, date, ukuran_sdb, nama_lengkap, no_telephone, email, provinsi, kota ) VALUES (NULL, '${date}', '${ukuran_sdb}', '${nama_lengkap}', '${no_telephone}', '${email}', '${provinsi}', '${kota}')`;
+  const sql = `INSERT INTO sdb (id, date, ukuran_sdb, nama_lengkap, no_telephone, email, provinsi, kota, kategori ) VALUES (NULL, '${date}', '${ukuran_sdb}', '${nama_lengkap}', '${no_telephone}', '${email}', '${provinsi}', '${kota}', '${kategori}')`;
 
   db.query(sql, (error, result) => {
     if (error) return response(500, "", "SDB Server Error", res);
