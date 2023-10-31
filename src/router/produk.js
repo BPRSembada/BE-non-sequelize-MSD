@@ -7,6 +7,11 @@ const { auth } = require("../middleware/auth");
 router.post("/pinjaman", Controller.createDataPinjaman);
 router.get("/pinjaman", auth, Controller.getAllDataPijaman);
 router.delete("/pinjaman", Controller.deleteDataPinjaman);
+router.post(
+  "/pinjaman/updatePinjaman",
+  auth,
+  Controller.updateKatogoriPinjaman
+);
 
 // router simpanan
 router.post("/simpanan", Controller.createDataSimpanan);

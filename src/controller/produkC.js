@@ -64,6 +64,32 @@ const deleteDataPinjaman = (req, res) => {
     }
   });
 };
+const updateKatogoriPinjaman = async (req, res) => {
+  try {
+    if (req.user.role === "admin") {
+      const { kategori, id } = req.body;
+      console.log(req.body);
+      const sql = `UPDATE pinjaman SET kategori = ? WHERE id = ?`;
+      db.query(sql, [kategori, id], (error, result) => {
+        console.log(result);
+        if (error) {
+          return response(500, error, "Fail update category", res);
+        } else {
+          return response(
+            200,
+            result,
+            `Update kategori for pinjaman with id ${id}`,
+            res
+          );
+        }
+      });
+    } else {
+      response(400, "access denied", "Your account is not an admin", res);
+    }
+  } catch (error) {
+    response(500, error, "Server error", res);
+  }
+};
 
 // controller Simpanan
 const createDataSimpanan = (req, res) => {
@@ -140,6 +166,7 @@ const updateKategoriSimpanan = async (req, res) => {
 
 const deleteDataSimpanan = (req, res) => {
   const { id } = req.body;
+  console.log(req.body);
   const sql = `DELETE FROM simpanan WHERE id = '${id}'`;
   db.query(sql, (error, result) => {
     if (error) response(500, "Delete Simpanan Invalid", "error", res);
@@ -324,6 +351,7 @@ module.exports = {
   createDataPinjaman,
   getAllDataPijaman,
   deleteDataPinjaman,
+  updateKatogoriPinjaman,
   getAlldataSimpanan,
   createDataSimpanan,
   deleteDataSimpanan,

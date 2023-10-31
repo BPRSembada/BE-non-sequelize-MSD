@@ -71,6 +71,7 @@ const getUsers = async (req, res) => {
 const login = async (req, res) => {
   try {
     const { email, password } = req.body;
+    console.log(req.body);
     const sql = `SELECT * FROM users WHERE email ='${email}'`;
     db.query(sql, async (error, result) => {
       if (error) {
