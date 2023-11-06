@@ -27,15 +27,26 @@ router.delete("/simpanan", Controller.deleteDataSimpanan);
 router.post("/kemitraan", Controller.creatDataKemitraan);
 router.get("/kemitraan", auth, Controller.getAllDataKemitraan);
 router.delete("/kemitraan", Controller.deleteDataKemitraan);
+router.post(
+  "/kemitraan/updateKemitraan",
+  auth,
+  Controller.updateKategoriKemitraan
+);
 
 // router SDB
 router.post("/SDB", Controller.creatDataSDB);
 router.get("/SDB", auth, Controller.getAllDataSDB);
 router.delete("/SDB", Controller.deleteDataSDB);
+router.post("/SDB/updateSDB", auth, Controller.updateKategoriSDB);
 
 // router pengaduan nasabah
 router.post("/pengaduan", Controller.createDataPengaduan);
 router.get("/pengaduan", auth, Controller.getALLDataPengaduan);
 router.delete("/pengaduan", Controller.deleteDataPengaduan);
+router.post(
+  "/pengaduan/updatePengaduan",
+  auth,
+  Controller.updateKategoriPengaduan
+);
 
 module.exports = router;

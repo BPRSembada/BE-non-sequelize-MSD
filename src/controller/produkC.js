@@ -240,6 +240,33 @@ const deleteDataKemitraan = (req, res) => {
   });
 };
 
+const updateKategoriKemitraan = async (req, res) => {
+  try {
+    if (req.user.role === "admin") {
+      const { kategori, id } = req.body;
+      console.log(req.body);
+      const sql = `UPDATE kemitraan SET kategori = ? WHERE id = ?`;
+      db.query(sql, [kategori, id], (error, result) => {
+        console.log(result);
+        if (error) {
+          return response(500, "error", "Fail update category", res);
+        } else {
+          return response(
+            200,
+            result,
+            `Updated kategori for kemitraan with id ${id}`,
+            res
+          );
+        }
+      });
+    } else {
+      response(400, "access denied", "Your account is not an admin", res);
+    }
+  } catch (error) {
+    response(500, error, "Server error", res);
+  }
+};
+
 //  SDB controller
 const creatDataSDB = (req, res) => {
   const {
@@ -301,6 +328,31 @@ const deleteDataSDB = (req, res) => {
     }
   });
 };
+const updateKategoriSDB = async (req, res) => {
+  try {
+    if (req.user.role === "admin") {
+      const { kategori, id } = req.body;
+      console.log(req.body);
+      const sql = `UPDATE sdb SET kategori = ? WHERE id = ?`;
+      db.query(sql, [kategori, id], (error, result) => {
+        if (error) {
+          return response(500, "error", "Fail update category", res);
+        } else {
+          return response(
+            200,
+            result,
+            `Updated kategori for SDB with id ${id}`,
+            res
+          );
+        }
+      });
+    } else {
+      response(400, "access denied", "Your account is not an admin", res);
+    }
+  } catch (error) {
+    response(500, error, "Server error", res);
+  }
+};
 
 // controller pengaduan nasabah
 const createDataPengaduan = (req, res) => {
@@ -353,6 +405,33 @@ const deleteDataPengaduan = (req, res) => {
   });
 };
 
+const updateKategoriPengaduan = async (req, res) => {
+  try {
+    if (req.user.role === "admin") {
+      const { kategori, id } = req.body;
+      console.log(req.body);
+      const sql = `UPDATE pengaduan SET kategori = ? WHERE id = ?`;
+      db.query(sql, [kategori, id], (error, result) => {
+        console.log(result);
+        if (error) {
+          return response(500, "error", "Fail update category", res);
+        } else {
+          return response(
+            200,
+            result,
+            `Updated kategori for pengaduan with id ${id}`,
+            res
+          );
+        }
+      });
+    } else {
+      response(400, "access denied", "Your account is not an admin", res);
+    }
+  } catch (error) {
+    response(500, error, "Server error", res);
+  }
+};
+
 module.exports = {
   createDataPinjaman,
   getAllDataPijaman,
@@ -365,10 +444,13 @@ module.exports = {
   creatDataKemitraan,
   getAllDataKemitraan,
   deleteDataKemitraan,
+  updateKategoriKemitraan,
   creatDataSDB,
   getAllDataSDB,
   deleteDataSDB,
+  updateKategoriSDB,
   getALLDataPengaduan,
   createDataPengaduan,
   deleteDataPengaduan,
+  updateKategoriPengaduan,
 };
