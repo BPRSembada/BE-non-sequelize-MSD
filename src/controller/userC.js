@@ -175,10 +175,33 @@ const keepLogin = async (req, res) => {
   }
 };
 
+const updateProfilePicture = async (req, res) => {
+  try {
+    const { id } = req.body;
+    const picture = req.file.filename;
+    const sql = `UPDATE users SET picture = ? WHERE id = ?`;
+    db.query(sql, [picture, id], (error, result) => {
+      if (error) {
+        return response(500, "error", "Fail update picture", res);
+      } else {
+        return response(
+          200,
+          result,
+          `Updated picture for user with id ${id}`,
+          res
+        );
+      }
+    });
+  } catch (error) {
+    response(400, error, "User server error", res);
+  }
+};
+
 module.exports = {
   registrasi,
   getUsers,
   login,
   logout,
   keepLogin,
+  updateProfilePicture,
 };
